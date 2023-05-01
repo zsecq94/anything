@@ -1,7 +1,7 @@
 export class Ruemi {
-  constructor(img, stageWidth) {
+  constructor(img, stageWidth, activeIndex) {
     this.img = img;
-
+    this.activeIndex = activeIndex;
     this.totalFrame = 11;
     this.curFrame = 0;
 
@@ -9,13 +9,18 @@ export class Ruemi {
     this.imgHeight = 480;
 
     // ruemi의 크기 조정
-    this.ruemiWidth = 320;
-    this.ruemiHeight = 240;
+    if (this.activeIndex === 1) {
+      this.ruemiWidth = 320 / 1.5;
+      this.ruemiHeight = 240 / 1.5;
+    } else {
+      this.ruemiWidth = 320;
+      this.ruemiHeight = 240;
+    }
 
     this.ruemiWidthHalf = this.ruemiWidth / 2;
     this.x = stageWidth + this.ruemiWidth;
     this.y = 0;
-    this.speed = Math.random() * 2 + 1;
+    this.speed = Math.random() * 2 + 1.5;
 
     this.fps = 11;
     this.fpsTime = 1000 / this.fps;

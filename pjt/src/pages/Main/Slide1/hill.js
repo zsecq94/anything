@@ -15,7 +15,7 @@ export class Hill {
     for (let i = 0; i < this.total; i++) {
       this.points[i] = {
         x: i * this.gap,
-        y: this.getY(),
+        y: this.getY() + 40,
       };
     }
   }

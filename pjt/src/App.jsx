@@ -1,10 +1,11 @@
 import "./App.css";
 import Main from "./pages/Main";
+import Test from "./pages/Main/Test";
 
 function App() {
   return (
     <div className="App">
-      <Main />
+      <Test />
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import { Ruemi } from "./ruemi.js";
 
 export class RuemiController {
-  constructor() {
+  constructor(activeIndex) {
+    this.activeIndex = activeIndex;
     this.img = new Image();
     this.img.onload = () => {
       this.loaded();
@@ -25,7 +26,7 @@ export class RuemiController {
   }
 
   addRuemi() {
-    this.items.push(new Ruemi(this.img, this.stageWidth));
+    this.items.push(new Ruemi(this.img, this.stageWidth, this.activeIndex));
   }
 
   draw(ctx, t, dots) {

@@ -1,25 +1,26 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Hill } from "./hill.js";
 import { RuemiController } from "./ruemi_controller.js";
 import { Sun } from "./sun.js";
 import { BsFillMouseFill } from "react-icons/bs";
 
-const MainSlide = () => {
+const MainSlide = ({ activeIndex }) => {
   const canvasRef = useRef();
   const sun = useRef(new Sun()).current;
-  const hills = useRef([
-    new Hill("#FFD3B5", 0.1, 12),
-    new Hill("#FFAAA6", 0.3, 8),
-    new Hill("#FF8C94", 0.5, 6),
-  ]).current;
-  const ruemiController = useRef(new RuemiController()).current;
+  const [hills, setHills] = useState([]);
+  const [ruemiController, setRuemiController] = useState(null);
 
   useEffect(() => {
     const resize = () => {
       const canvas = canvasRef.current;
       const ctx = canvas?.getContext("2d");
       const stageWidth = document.body.clientWidth;
-      const stageHeight = document.body.clientHeight;
+      const stageHeight =
+        activeIndex === 0
+          ? document.body.clientHeight + 10
+          : document.body.clientHeight / 4;
+      canvas.style.transition = "height 1s ease-out";
+      canvas.style.height = `${stageHeight}px`;
       canvas.width = stageWidth * 2;
       canvas.height = stageHeight * 2;
       ctx.scale(2, 2);
@@ -41,6 +42,16 @@ const MainSlide = () => {
       ruemiController.draw(ctx, t, dots);
     };
 
+    const hills = [
+      new Hill("#FFD3B5", 0.2, 12),
+      new Hill("#FFAAA6", 0.5, 8),
+      new Hill("#FF8C94", 0.8, 6),
+    ];
+    setHills(hills);
+
+    const ruemiController = new RuemiController(activeIndex);
+    setRuemiController(ruemiController);
+
     window.addEventListener("resize", resize, false);
     resize();
     requestAnimationFrame(animate);
@@ -48,8 +59,7 @@ const MainSlide = () => {
     return () => {
       window.removeEventListener("resize", resize, false);
     };
-  }, []);
-
+  }, [activeIndex]);
   return (
     <div
       style={{
