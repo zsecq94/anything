@@ -7,7 +7,6 @@ export class Ruemi {
 
     this.imgWidth = 640;
     this.imgHeight = 480;
-
     // ruemi의 크기 조정
     if (this.activeIndex === 1) {
       this.ruemiWidth = 320 / 1.5;

@@ -1,6 +1,6 @@
 export class Sun {
   constructor() {
-    this.radius = 200;
+    this.radius = 150;
   }
 
   resize(stageWidth, stageHeight) {

@@ -3,33 +3,26 @@ import "./Main.scss";
 import Slide1 from "./Slide1";
 import Slide2 from "./Slide2";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Pagination, Scrollbar, A11y, Mousewheel } from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-
-SwiperCore.use([Pagination, Scrollbar, A11y, Mousewheel]);
-
 const Main = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleWheel = (event) => {
+    if (event.deltaY > 0 && activeIndex < 1) {
+      setActiveIndex(activeIndex + 1);
+    } else if (event.deltaY < 0 && activeIndex > 0) {
+      setActiveIndex(activeIndex - 1);
+    }
+  };
+
   return (
-    <Swiper
-      className="swiper-container"
-      direction="vertical"
-      spaceBetween={50}
-      slidesPerView={1}
-      speed={1500}
-      scrollbar={{ draggable: true }}
-      mousewheel={{ sensitivity: 1 }}
-    >
-      <SwiperSlide className="swiper-slide1">
-        <Slide1 />
-      </SwiperSlide>
-      <SwiperSlide>
+    <div className="slide-wrapper" onWheel={handleWheel}>
+      <div className="slide1">
+        <Slide1 activeIndex={activeIndex} />
+      </div>
+      <div className="slide2">
         <Slide2 />
-      </SwiperSlide>
-    </Swiper>
+      </div>
+    </div>
   );
 };
 
