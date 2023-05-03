@@ -1,12 +1,5 @@
 .signup-wrapper {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-  align-items: center;
-  background-color: white;
+  width: 75vh;
   .brand {
     display: flex;
     align-items: center;
@@ -16,13 +9,25 @@
       color: white;
     }
   }
+
   form {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     background-color: #ffaaa6;
     border-radius: 2rem;
     padding: 3rem 5rem;
+    .message {
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 0;
+      gap: 0rem;
+      color: red;
+    }
+    .success {
+      font-weight: 500;
+      color: blue;
+    }
     input {
       background-color: transparent;
       padding: 1rem 0;
@@ -36,7 +41,7 @@
         outline: none;
       }
     }
-    button {
+    .button {
       background-color: gray;
       color: white;
       padding: 1rem 2rem;
@@ -47,9 +52,9 @@
       font-size: 1rem;
       text-transform: uppercase;
       transition: 0.5s ease-in-out;
-      &:hover {
-        background-color: #ff8c94;
-      }
+    }
+    .true {
+      background-color: #ff8c94;
     }
     span {
       color: white;

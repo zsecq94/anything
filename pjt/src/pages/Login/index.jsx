@@ -5,15 +5,15 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import "./Login.scss";
 
-const Login = () => {
+const Login = ({ setCheckAuth }) => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
     username: "",
     password: "",
   });
   const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
+    position: "top-center",
+    autoClose: 3000,
     pauseOnHover: true,
     draggable: true,
     theme: "dark",
@@ -48,18 +48,18 @@ const Login = () => {
 
   const handleValidation = () => {
     const { password, username } = values;
-    if (password === "") {
-      toast.error("아이디와 비밀번호를 입력해주세요.", toastOptions);
+    if (username.length < 5) {
+      toast.error("아이디를 5자 이상 입력해주세요.", toastOptions);
       return false;
-    } else if (username.length === "") {
-      toast.error("아이디와 비밀번호를 입력해주세요.", toastOptions);
+    } else if (password.length < 8) {
+      toast.error("비밀번호를 8자 이상 입력해주세요.", toastOptions);
       return false;
     }
     return true;
   };
 
   return (
-    <div className="signup-wrapper">
+    <div className="login-wrapper">
       <form onSubmit={(event) => handleSubmit(event)}>
         <div className="brand">
           <h1>로그인</h1>
@@ -81,7 +81,8 @@ const Login = () => {
 
         <button type="submit">로그인</button>
         <span>
-          아이디가 없으신가요 ?<Link to="/signup"> 회원가입</Link>
+          아이디가 없으신가요 ?
+          <Link onClick={() => setCheckAuth("signup")}> 회원가입</Link>
         </span>
       </form>
       <ToastContainer />

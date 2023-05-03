@@ -1,17 +1,6 @@
-.signup-wrapper {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-  align-items: center;
-  background-color: white;
+.login-wrapper {
+  width: 65vh;
   .brand {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    justify-content: center;
     h1 {
       color: white;
     }

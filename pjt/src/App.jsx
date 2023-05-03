@@ -13,8 +13,8 @@ function App() {
       <Routes>
         <React.Fragment>
           <Route path="/" element={<Main />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/signup" element={<Signup />}></Route>
+          {/* <Route path="/login" element={<Login />}></Route>
+          <Route path="/signup" element={<Signup />}></Route> */}
         </React.Fragment>
       </Routes>
     </div>
