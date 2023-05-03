@@ -139,7 +139,6 @@ const Signup = ({ setCheckAuth }) => {
           <h1>회원가입</h1>
         </div>
         <input
-          required
           type="text"
           placeholder="아이디"
           name="username"
@@ -180,7 +179,6 @@ const Signup = ({ setCheckAuth }) => {
             회원가입
           </button>
         )}
-
         <span>
           이미 계정이 있으신가요?
           <Link onClick={() => setCheckAuth("login")}> 로그인</Link>

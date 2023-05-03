@@ -14,10 +14,9 @@
     padding: 3rem 5rem;
     input {
       background-color: white;
-      padding: 1rem 0;
+      padding: 1rem 0.8rem;
       border: 0.1rem solid white;
       color: black;
-      width: 100%;
       font-size: 1rem;
       border-radius: 5px;
       &:focus {
@@ -27,7 +26,6 @@
       }
     }
     input::placeholder {
-      padding-left: 10px;
       font-style: italic;
     }
     .button1 {
