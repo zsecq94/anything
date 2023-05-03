@@ -38,7 +38,7 @@ const Header = () => {
         <FaUserCircle />
       </div>
       {showModal && (
-        <div className={`modal-overlay active`}>
+        <div className="modal-overlay">
           <div className="modal-wrapper" ref={modalRef}>
             {checkAuth === "login" ? (
               <Login setCheckAuth={setCheckAuth} />

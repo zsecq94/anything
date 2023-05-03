@@ -19,11 +19,12 @@ const Login = ({ setCheckAuth }) => {
     theme: "dark",
   };
 
-  useEffect(() => {
-    if (localStorage.getItem("chat-app-user")) {
-      navigate("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem("chat-app-user")) {
+  //     navigate("/");
+  //   }
+  // localStorage.setItem("chat-app-user", JSON.stringify(data.user));
+  // }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -69,7 +70,6 @@ const Login = ({ setCheckAuth }) => {
           placeholder="아이디"
           name="username"
           onChange={(e) => handleChange(e)}
-          min="3"
         />
 
         <input
@@ -78,8 +78,17 @@ const Login = ({ setCheckAuth }) => {
           name="password"
           onChange={(e) => handleChange(e)}
         />
+        {(values.username.length > 4 || values.username.length < 12) &&
+        values.password.length > 8 ? (
+          <button className="button2" type="submit">
+            로그인
+          </button>
+        ) : (
+          <button className="button1" disabled>
+            로그인
+          </button>
+        )}
 
-        <button type="submit">로그인</button>
         <span>
           아이디가 없으신가요 ?
           <Link onClick={() => setCheckAuth("signup")}> 회원가입</Link>

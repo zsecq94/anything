@@ -18,18 +18,17 @@
     border-radius: 2rem;
     padding: 3rem 5rem;
     .message {
+      font-family: "IBM Plex Sans KR";
       font-size: 1rem;
-      font-weight: 500;
-      padding: 0;
-      gap: 0rem;
       color: red;
     }
     .success {
       font-weight: 500;
-      color: blue;
+      color: green;
     }
     input {
-      background-color: transparent;
+      border-radius: 10px;
+      background-color: white;
       padding: 1rem 0;
       border: 0.1rem solid white;
       color: black;
@@ -37,12 +36,27 @@
       font-size: 1rem;
       &:focus {
         background-color: white;
-        border: 0.1rem solid #ff8c94;
+        border: 0.1rem solid #ffb200;
         outline: none;
       }
     }
-    .button {
+    input::placeholder {
+      padding-left: 10px;
+      font-style: italic;
+    }
+    .button1 {
       background-color: gray;
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      font-weight: bold;
+      border-radius: 0.4rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      transition: 0.5s ease-in-out;
+    }
+    .button2 {
+      background-color: red;
       color: white;
       padding: 1rem 2rem;
       border: none;
@@ -53,9 +67,6 @@
       text-transform: uppercase;
       transition: 0.5s ease-in-out;
     }
-    .true {
-      background-color: #ff8c94;
-    }
     span {
       color: white;
       text-transform: uppercase;
@@ -65,7 +76,7 @@
         font-weight: bold;
         transition: 0.5s ease-in-out;
         &:hover {
-          color: #ff8c94;
+          color: red;
         }
       }
     }

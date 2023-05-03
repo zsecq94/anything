@@ -14,6 +14,18 @@ const Signup = ({ setCheckAuth }) => {
     confirmPassword: "",
   });
 
+  // 유효성 체크 메세지
+  const [idMessage, setIdMessage] = useState("");
+  const [nicknameMessage, setNickNameMessage] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
+
+  // // 유효성 체크
+  const [isId, setIsId] = useState(false);
+  const [isNickname, setIsNickName] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+
   const toastOptions = {
     position: "top-center",
     autoClose: 3000,
@@ -46,20 +58,6 @@ const Signup = ({ setCheckAuth }) => {
       // }
     }
   };
-  const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
-  };
-  // 유효성 체크 메세지
-  const [idMessage, setIdMessage] = useState("");
-  const [nicknameMessage, setNickNameMessage] = useState("");
-  const [passwordMessage, setPasswordMessage] = useState("");
-  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
-
-  // // 유효성 체크
-  const [isId, setIsId] = useState(false);
-  const [isNickname, setIsNickName] = useState(false);
-  const [isPassword, setIsPassword] = useState(false);
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
   const onChangeId = (e) => {
     const currentId = e.target.value;
@@ -70,7 +68,7 @@ const Signup = ({ setCheckAuth }) => {
       setIdMessage("4-12사이 대소문자 또는 숫자만 입력해 주세요!");
       setIsId(false);
     } else {
-      setIdMessage("사용가능한 아이디 입니다.");
+      setIdMessage("");
       setIsId(true);
     }
   };
@@ -83,7 +81,7 @@ const Signup = ({ setCheckAuth }) => {
       setNickNameMessage("닉네임은 2글자 이상 5글자 이하로 입력해주세요!");
       setIsNickName(false);
     } else {
-      setNickNameMessage("사용가능한 닉네임 입니다.");
+      setNickNameMessage("");
       setIsNickName(true);
     }
   };
@@ -99,7 +97,7 @@ const Signup = ({ setCheckAuth }) => {
       );
       setIsPassword(false);
     } else {
-      setPasswordMessage("안전한 비밀번호 입니다.");
+      setPasswordMessage("");
       setIsPassword(true);
     }
   };
@@ -110,14 +108,13 @@ const Signup = ({ setCheckAuth }) => {
       setPasswordConfirmMessage("떼잉~ 비밀번호가 똑같지 않아요!");
       setIsPasswordConfirm(false);
     } else {
-      setPasswordConfirmMessage("똑같은 비밀번호를 입력했습니다.");
+      setPasswordConfirmMessage("");
       setIsPasswordConfirm(true);
     }
   };
 
   const handleValidation = () => {
     const { password, confirmPassword, username, nickname } = values;
-    console.log(username.length);
     if (username.length < 5 || username.length > 10) {
       toast.error("아이디를 5자 이상 10자 이하로 입력해주세요.", toastOptions);
       return false;
@@ -142,21 +139,21 @@ const Signup = ({ setCheckAuth }) => {
           <h1>회원가입</h1>
         </div>
         <input
+          required
           type="text"
           placeholder="아이디"
           name="username"
           onChange={(e) => onChangeId(e)}
         />
-        <p className={`message ${isId && "success"}`}> {idMessage} </p>
+        <p className={`message ${isId && "success"}`}>{idMessage}</p>
         <input
-          type="nickname"
+          type="text"
           placeholder="닉네임"
           name="nickname"
           onChange={(e) => onChangeNickName(e)}
         />
         <p className={`message ${isNickname && "success"}`}>
-          {" "}
-          {nicknameMessage}{" "}
+          {nicknameMessage}
         </p>
         <input
           type="password"
@@ -165,8 +162,7 @@ const Signup = ({ setCheckAuth }) => {
           onChange={(e) => onChangePassword(e)}
         />
         <p className={`message ${isPassword && "success"}`}>
-          {" "}
-          {passwordMessage}{" "}
+          {passwordMessage}
         </p>
         <input
           type="password"
@@ -175,25 +171,19 @@ const Signup = ({ setCheckAuth }) => {
           onChange={(e) => onChangePasswordConfirm(e)}
         />
         <p className={`message ${isPasswordConfirm && "success"}`}>
-          {" "}
-          {passwordConfirmMessage}{" "}
+          {passwordConfirmMessage}
         </p>
-        <button
-          disabled={
-            isId && isNickname && isPassword && isPasswordConfirm
-              ? "true"
-              : "false"
-          }
-          className={`button ${
-            isId && isNickname && isPassword && isPasswordConfirm && "true"
-          }`}
-          type="submit"
-        >
-          회원가입
-        </button>
+        {isId && isNickname && isPassword && isPasswordConfirm ? (
+          <button className="button2">회원가입</button>
+        ) : (
+          <button className="button1" disabled>
+            회원가입
+          </button>
+        )}
+
         <span>
-          이미 계정이 있으신가요 ?{" "}
-          <Link onClick={() => setCheckAuth("login")}>로그인</Link>
+          이미 계정이 있으신가요?
+          <Link onClick={() => setCheckAuth("login")}> 로그인</Link>
         </span>
       </form>
       <ToastContainer />

@@ -51,12 +51,31 @@
     justify-content: center;
     align-items: center;
     z-index: 1;
-  }
 
-  .modal-wrapper {
-    animation: title-shake 5s ease-in-out infinite;
-    border-radius: 30px;
-    background-color: transparent;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    .modal-wrapper {
+      border-radius: 30px;
+      background-color: transparent;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      animation: fadein 1.5s;
+    }
+  }
+}
+@keyframes fadein {
+  /* 효과를 동작시간 동안 0 ~ 1까지 */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  /* 효과를 동작시간 동안 0 ~ 1까지 */
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
