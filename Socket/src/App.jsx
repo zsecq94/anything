@@ -1,43 +1,57 @@
 import "./App.scss";
 import Main from "./pages/Main";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
 import Header from "./layout/Header";
 import { Routes, Route } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
-function App() {
-  const webSocketUrl = `wss://k8c208.p.ssafy.io:8080`;
+const App = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   // let ws = useRef(null);
   const [items, setItems] = useState();
-  const [msg, setMsb] = useState("");
-  const [sendData, setSendData] = useState([])
-  const ws = new WebSocket(webSocketUrl);
-  useEffect(() => {
-    ws.onopen = () => {
-      console.log("CONNECT");
-      console.log(ws);
-    };
+  const [sendData, setSendData] = useState({
+    name: "",
+    from: "",
+    to: "",
   });
 
-  const orderData = {
-    name: "jkjkbjk",
-    from: "C201",
-    to: "C108",
-  };
+  const webSocketUrl = `wss://k8c208.p.ssafy.io:8080`;
+  const ws = new WebSocket(webSocketUrl);
+  useEffect(() => {
+    if (user?.name) {
+      setSendData({
+        ...sendData,
+        name: user.name,
+      });
+    }
+
+    // 첫 연결시 orderList 요청
+    ws.onopen = () => {
+      console.log("CONNECT");
+      ws.send("getOrderList");
+    };
+
+    // 받아온 orderList items에 저장
+    ws.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      if (Array.isArray(data)) {
+        setItems(data);
+      }
+    };
+  }, []);
 
   ws.onmessage = (e) => {
     const data = JSON.parse(e.data);
-    setItems((prev) => [data]);
-  };
-  const send = () => {
-    const data = {
-    };
-      ws.send(JSON.stringify(data));
-    }
+    setItems((prev) => data);
   };
 
-  console.log(items);
+  const send = () => {
+    ws.send(JSON.stringify(sendData));
+  };
+
+  const removeData = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    ws.send(JSON.stringify({ action: "removeData", name: user.name }));
+  };
 
   // 소켓 객체 생성
   // useEffect(() => {
@@ -69,18 +83,30 @@ function App() {
   //     //ws.current.close();
   //   };
   // }, []);
+
   return (
     <div className="App">
       <Header />
       <Routes>
         <React.Fragment>
-          <Route path="/" element={<Main items={items} />}></Route>
+          <Route
+            path="/"
+            element={
+              <Main
+                items={items}
+                setSendData={setSendData}
+                send={send}
+                sendData={sendData}
+                removeData={removeData}
+              />
+            }
+          ></Route>
           {/* <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<Signup />}></Route> */}
         </React.Fragment>
       </Routes>
     </div>
   );
-}
+};
 
 export default App;

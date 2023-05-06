@@ -7,7 +7,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-const TableComponent = ({ items }) => {
+const TableComponent = ({ items, removeData }) => {
+  const user = JSON.parse(localStorage.getItem("user"));
   if (!Array.isArray(items)) {
     items = [];
   }
@@ -25,7 +26,7 @@ const TableComponent = ({ items }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {items[0]?.map((row, index) => (
+          {items?.map((row, index) => (
             <TableRow
               key={index}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -35,7 +36,11 @@ const TableComponent = ({ items }) => {
               </TableCell>
               <TableCell align="right">{row.from}</TableCell>
               <TableCell align="right">{row.to}</TableCell>
-              <TableCell align="right">{}</TableCell>
+              <TableCell align="right">
+                {row.name === user?.name && (
+                  <button onClick={removeData}>무르기</button>
+                )}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

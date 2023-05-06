@@ -7,20 +7,28 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TableComponent from "../../../components/TableComponent";
 
-const Slide2 = ({ items }) => {
-  const [socketConnected, setSocketConnected] = useState(false);
-  const [sendMsg, setSendMsg] = useState(false);
-
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+const Slide2 = ({ items, setSendData, send, sendData, removeData }) => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const handleFrom = (event) => {
-    setFrom(event.target.value);
+    setSendData({
+      ...sendData,
+      from: event.target.value,
+    });
   };
+  useEffect(() => {
+    items.map((V, index) => {
+      if (V.name === user?.name) {
+        console.log(V);
+      }
+    });
+  }, [items]);
 
   const handleTo = (event) => {
-    setTo(event.target.value);
+    setSendData({
+      ...sendData,
+      to: event.target.value,
+    });
   };
 
   const List = [
@@ -41,22 +49,11 @@ const Slide2 = ({ items }) => {
     "C207",
     "C208",
   ];
-  const webSocketUrl = `wss://k8c208.p.ssafy.io:8080`;
-  const ws = new WebSocket(webSocketUrl);
-  const sendData = () => {
-    const data = {
-      name: user.name,
-      from: from,
-      to: to,
-    };
-    if (socketConnected) {
-      ws.send(JSON.stringify(data));
-    }
-  };
+
   return (
     <div className="swiper-slide2">
       <div>
-        <TableComponent items={items} />
+        <TableComponent items={items} removeData={removeData} />
       </div>
       {JSON.parse(localStorage.getItem("user"))?.name === undefined ? (
         <h2>부르미를 이용하시려면 로그인을 해주세요!</h2>
@@ -77,7 +74,7 @@ const Slide2 = ({ items }) => {
           >
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">보낼 곳</InputLabel>
-              <Select value={from} onChange={handleFrom}>
+              <Select value={sendData.from} onChange={handleFrom}>
                 {List.map((V, index) => (
                   <MenuItem key={index} value={V}>
                     {V}
@@ -94,7 +91,7 @@ const Slide2 = ({ items }) => {
           >
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">받는 곳</InputLabel>
-              <Select value={to} onChange={handleTo}>
+              <Select value={sendData.to} onChange={handleTo}>
                 {List.map((V, index) => (
                   <MenuItem key={index} value={V}>
                     {V}
@@ -103,7 +100,7 @@ const Slide2 = ({ items }) => {
               </Select>
             </FormControl>
           </Box>
-          <button onClick={sendData} style={{ padding: "0 2rem" }}>
+          <button onClick={send} style={{ padding: "0 2rem" }}>
             부르기
           </button>
         </div>
