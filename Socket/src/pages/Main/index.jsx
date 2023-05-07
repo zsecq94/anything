@@ -3,7 +3,16 @@ import "./Main.scss";
 import Slide1 from "./Slide1";
 import Slide2 from "./Slide2";
 
-const Main = ({ items, setSendData, send, sendData, removeData }) => {
+const Main = ({
+  items,
+  setSendData,
+  send,
+  sendData,
+  removeData,
+  setCheck,
+  check,
+  dataValid,
+}) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleWheel = (event) => {
@@ -26,6 +35,9 @@ const Main = ({ items, setSendData, send, sendData, removeData }) => {
           send={send}
           sendData={sendData}
           removeData={removeData}
+          setCheck={setCheck}
+          check={check}
+          dataValid={dataValid}
         />
       </div>
     </div>

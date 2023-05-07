@@ -7,12 +7,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-const TableComponent = ({ items, removeData }) => {
+const TableComponent = ({ items, removeData, setCheck }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!Array.isArray(items)) {
     items = [];
   }
-  console.log("TableComponent안의 items :", items);
 
   return (
     <TableContainer sx={{ borderRadius: "20px" }} component={Paper}>
@@ -38,7 +37,14 @@ const TableComponent = ({ items, removeData }) => {
               <TableCell align="right">{row.to}</TableCell>
               <TableCell align="right">
                 {row.name === user?.name && (
-                  <button onClick={removeData}>무르기</button>
+                  <button
+                    onClick={() => {
+                      removeData();
+                      setCheck(false);
+                    }}
+                  >
+                    무르기
+                  </button>
                 )}
               </TableCell>
             </TableRow>

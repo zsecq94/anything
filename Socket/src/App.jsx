@@ -8,12 +8,14 @@ const App = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   // let ws = useRef(null);
   const [items, setItems] = useState();
+  const [check, setCheck] = useState(false);
   const [sendData, setSendData] = useState({
     name: "",
     from: "",
     to: "",
   });
 
+  const dataValid = sendData.to.length > 0 && sendData.from.length > 0;
   const webSocketUrl = `wss://k8c208.p.ssafy.io:8080`;
   const ws = new WebSocket(webSocketUrl);
   useEffect(() => {
@@ -34,6 +36,11 @@ const App = () => {
     ws.onmessage = (e) => {
       const data = JSON.parse(e.data);
       if (Array.isArray(data)) {
+        data.map((V, index) => {
+          if (user?.name === V.name) {
+            setCheck(true);
+          }
+        });
         setItems(data);
       }
     };
@@ -49,7 +56,6 @@ const App = () => {
   };
 
   const removeData = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
     ws.send(JSON.stringify({ action: "removeData", name: user.name }));
   };
 
@@ -98,6 +104,9 @@ const App = () => {
                 send={send}
                 sendData={sendData}
                 removeData={removeData}
+                setCheck={setCheck}
+                check={check}
+                dataValid={dataValid}
               />
             }
           ></Route>
